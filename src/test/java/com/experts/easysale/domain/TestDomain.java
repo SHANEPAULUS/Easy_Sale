@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.security.MessageDigest;
+import java.sql.Date;
 
 /**
  *
@@ -64,6 +65,16 @@ public class TestDomain {
 
         Assert.assertNotNull(baseball);
         Assert.assertEquals(300.00,baseball.getPrice());
+    }
+
+    @Test
+    public void testInvoice() throws Exception {
+        Invoice invoice=new Invoice
+                .Builder(new Date(15,10,15))
+                .build();
+
+        Assert.assertNotNull(invoice);
+
     }
 
     @Test

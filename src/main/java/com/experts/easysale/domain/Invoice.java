@@ -6,7 +6,7 @@
 package com.experts.easysale.domain;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,9 +27,12 @@ public class Invoice {
     }
 
     public Invoice(Builder builder) {
+        this.date=builder.date;
+        this.id=builder.id;
+        this.invoiceItems=builder.invoiceItems;
     }
 
-    static class Builder{
+    public static class Builder{
         private Long id;
         private Date date;
         private List<OrderLine> invoiceItems;
