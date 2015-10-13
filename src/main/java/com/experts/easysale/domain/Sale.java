@@ -13,8 +13,12 @@ public class Sale implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date postedDate;
-    private Date expireDate;
+    private String postedDate;
+    private String expireDate;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="sale_id")
+    private List<Bid> bids;
+
     //private List<>
 
 
@@ -22,19 +26,24 @@ public class Sale implements Serializable{
     }
 
     public Sale(Builder builder) {
+        this.postedDate=builder.postedDate;
+        this.id=builder.id;
+        this.expireDate=builder.expireDate;
+        this.bids=builder.bids;
     }
 
-    static class Builder{
+    public static class Builder{
         private Long id;
-        private Date postedDate;
-        private Date expireDate;
+        private String postedDate;
+        private String expireDate;
+        private List<Bid> bids;
 
-        public Builder(Date value)
+        public Builder(String value)
         {
             this.postedDate=value;
         }
 
-        public Builder expire(Date value)
+        public Builder expire(String value)
         {
             this.expireDate=value;
             return this;
@@ -46,11 +55,18 @@ public class Sale implements Serializable{
             return this;
         }
 
+        public Builder bids(List<Bid> list)
+        {
+            this.bids=list;
+            return this;
+        }
+
         public Builder copy(Sale sale)
         {
             this.expireDate=sale.expireDate;
             this.id=sale.id;
             this.postedDate=sale.postedDate;
+            this.bids=sale.bids;
             return this;
         }
 
@@ -64,11 +80,15 @@ public class Sale implements Serializable{
         return id;
     }
 
-    public Date getPostedDate() {
+    public String getPostedDate() {
         return postedDate;
     }
 
-    public Date getExpireDate() {
+    public List<Bid> getBids() {
+        return bids;
+    }
+
+    public String getExpireDate() {
         return expireDate;
     }
 
@@ -92,9 +112,10 @@ public class Sale implements Serializable{
     @Override
     public String toString() {
         return "Sale{" +
-                "id=" + id +
-                ", postedDate=" + postedDate +
-                ", expireDate=" + expireDate +
+                "bids=" + bids +
+                ", expireDate='" + expireDate + '\'' +
+                ", postedDate='" + postedDate + '\'' +
+                ", id=" + id +
                 '}';
     }
 }

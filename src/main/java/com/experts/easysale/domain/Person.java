@@ -24,6 +24,7 @@ public class Person implements Serializable{
     private String firstName;
     private String lastName;
     private String password;
+    private String role;
     private int age;
     @Embedded
     private Contact contact;
@@ -33,7 +34,9 @@ public class Person implements Serializable{
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id")
     private List<Sale> sales;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="client_id")
+    private List<Bid> bidList;
 
     public Person() {
     }
@@ -47,21 +50,31 @@ public class Person implements Serializable{
         this.password=builder.password;
         this.sales=builder.sales;
         this.invoices=builder.invoices;
+        this.role=builder.role;
+        this.bidList=builder.bidList;
     }
     
     public static class Builder{
         private String firstName;
         private String lastName;
         private String password;
+        private String role;
         private int age;
         private Contact contact; 
         private Long id;
         private List<Invoice> invoices;
         private List<Sale> sales;
+        private List<Bid> bidList;
         
         public Builder(String value)
         {
             this.lastName=value;
+        }
+
+        public Builder bidList(List<Bid> list)
+        {
+            this.bidList=list;
+            return this;
         }
         
         public Builder firstName(String value)
@@ -73,6 +86,12 @@ public class Person implements Serializable{
         public Builder age(int value)
         {
             this.age=value;
+            return this;
+        }
+
+        public Builder role(String role)
+        {
+            this.role=role;
             return this;
         }
 
@@ -116,6 +135,7 @@ public class Person implements Serializable{
             this.password=value.password;
             this.sales=value.sales;
             this.invoices=value.invoices;
+            this.bidList=value.bidList;
             return this;
         }
         
@@ -151,6 +171,14 @@ public class Person implements Serializable{
 
     public List<Sale> getSales() {
         return sales;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public List<Bid> getBidList() {
+        return bidList;
     }
 
     private static String convertPasswordToMD5(String pass) throws NoSuchAlgorithmException {
@@ -200,10 +228,12 @@ public class Person implements Serializable{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 ", age=" + age +
                 ", contact=" + contact +
                 ", invoices=" + invoices +
                 ", sales=" + sales +
+                ", bidList=" + bidList +
                 '}';
     }
 }

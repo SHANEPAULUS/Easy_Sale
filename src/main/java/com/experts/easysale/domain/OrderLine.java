@@ -27,7 +27,8 @@ public class OrderLine {
 
     public OrderLine(Builder builder)
     {
-
+        this.id=builder.id;
+        this.quantity=builder.quantity;
     }
 
     static class Builder{

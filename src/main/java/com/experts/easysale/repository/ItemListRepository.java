@@ -1,6 +1,6 @@
 package com.experts.easysale.repository;
 
-import com.experts.easysale.domain.Person;
+import com.experts.easysale.domain.ItemList;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * Created by SHANE on 2015/10/13.
  */
 @Repository
-public interface PersonRepository extends CrudRepository<Person,Long> {
+public interface ItemListRepository extends CrudRepository<ItemList,Long>{
 }

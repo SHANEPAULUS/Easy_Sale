@@ -17,7 +17,10 @@ public class Item implements Serializable{
     private int quantity;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="Items_id")
-    private List<Sale> sale;
+    private List<ItemList> itemList;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="Items_id")
+    private List<OrderLine> orderList;
 
     public Item() {
     }
@@ -27,7 +30,8 @@ public class Item implements Serializable{
         this.id=builder.id;
         this.price=builder.price;
         this.quantity=builder.quantity;
-        this.sale=builder.sale;
+        this.itemList=builder.itemList;
+        this.orderList=builder.orderList;
     }
 
     public static class Builder{
@@ -35,7 +39,8 @@ public class Item implements Serializable{
         private String description;
         private Double price;
         private int quantity;
-        private List<Sale> sale;
+        private List<ItemList> itemList;
+        private List<OrderLine> orderList;
 
         public Builder(String value)
         {
@@ -48,9 +53,15 @@ public class Item implements Serializable{
             return this;
         }
 
-        public Builder sale(List<Sale> list)
+        public Builder order(List<OrderLine> list)
         {
-            this.sale=list;
+            this.orderList=list;
+            return this;
+        }
+
+        public Builder itemList(List<ItemList> list)
+        {
+            this.itemList=list;
             return this;
         }
 
@@ -72,7 +83,8 @@ public class Item implements Serializable{
             this.quantity=value.quantity;
             this.description=value.description;
             this.id=value.id;
-            this.sale=value.sale;
+            this.itemList=value.itemList;
+            this.orderList=value.orderList;
             return this;
         }
 
@@ -98,8 +110,12 @@ public class Item implements Serializable{
         return quantity;
     }
 
-    public List<Sale> getSale() {
-        return sale;
+    public List<OrderLine> getOrderList() {
+        return orderList;
+    }
+
+    public List<ItemList> getItemList() {
+        return itemList;
     }
 
     @Override
@@ -125,7 +141,8 @@ public class Item implements Serializable{
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
-                ", sale=" + sale +
+                ", itemList=" + itemList +
+                ", orderList=" + orderList +
                 '}';
     }
 }

@@ -18,7 +18,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Date date;
+    private String date;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="Invoice_id")
     private List<OrderLine> invoiceItems;
@@ -34,10 +34,10 @@ public class Invoice {
 
     public static class Builder{
         private Long id;
-        private Date date;
+        private String date;
         private List<OrderLine> invoiceItems;
 
-        public Builder(Date date)
+        public Builder(String date)
         {
             this.date=date;
         }
@@ -72,7 +72,7 @@ public class Invoice {
         return id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

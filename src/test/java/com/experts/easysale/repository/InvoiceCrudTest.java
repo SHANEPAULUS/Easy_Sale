@@ -17,16 +17,16 @@ import java.util.Date;
 @SpringApplicationConfiguration(classes= App.class)
 @WebAppConfiguration
 public class InvoiceCrudTest extends AbstractTestNGSpringContextTests{
-    private Long id=2L;
+    private Long id=1L;
 
     @Autowired
     private InvoiceRepository repository;
 
     @Test
     public void testCreate() throws Exception {
-        Date today=new Date(15,10,13);
+
         Invoice invoice=new Invoice
-                .Builder(today)
+                .Builder("2015/10/13")
                 .build();
         repository.save(invoice);
     }
@@ -39,11 +39,25 @@ public class InvoiceCrudTest extends AbstractTestNGSpringContextTests{
 
     @Test
     public void testUpdate() throws Exception {
+        Invoice invoice=repository.findOne(id);
+        Invoice newInvoice=new Invoice
+                .Builder(invoice.getDate())
+                .copy(invoice)
+                .build();
+
+        repository.save(newInvoice);
+        Invoice updatedInvoice=repository.findOne(id);
+        //Assert.assertEquals(null,updatedInvoice.getInvoiceItems());
 
     }
 
     @Test
     public void testDelete() throws Exception {
+        Invoice invoice=repository.findOne(id);
+        repository.delete(invoice);
+
+        Invoice deletedInvoice=repository.findOne(id);
+        Assert.assertNull(deletedInvoice);
 
     }
 }

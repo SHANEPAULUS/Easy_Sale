@@ -70,7 +70,7 @@ public class TestDomain {
     @Test
     public void testInvoice() throws Exception {
         Invoice invoice=new Invoice
-                .Builder(new Date(15,10,15))
+                .Builder("2015/10/13")
                 .build();
 
         Assert.assertNotNull(invoice);
