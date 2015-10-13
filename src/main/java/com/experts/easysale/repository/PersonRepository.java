@@ -6,8 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by SHANE on 2015/10/12.
+ * Created by SHANE on 2015/10/13.
  */
 @Repository
-public interface BuyerRepository extends CrudRepository<Person,Long> {
+public interface PersonRepository extends CrudRepository<Person,Long> {
 }

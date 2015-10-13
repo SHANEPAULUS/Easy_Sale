@@ -5,19 +5,100 @@
  */
 package com.experts.easysale.domain;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 /**
  *
  * @author shane
  */
+@Entity
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
-    //private List<OrderLine>...
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="Invoice_id")
+    private List<OrderLine> invoiceItems;
+
+    public Invoice() {
+    }
+
+    public Invoice(Builder builder) {
+    }
+
+    static class Builder{
+        private Long id;
+        private Date date;
+        private List<OrderLine> invoiceItems;
+
+        public Builder(Date date)
+        {
+            this.date=date;
+        }
+
+        public Builder id(Long value)
+        {
+            this.id=value;
+            return this;
+        }
+
+        public Builder items(List<OrderLine> list)
+        {
+            this.invoiceItems=list;
+            return this;
+        }
+
+        public Builder copy(Invoice invoice)
+        {
+            this.invoiceItems=invoice.invoiceItems;
+            this.date=invoice.date;
+            this.id=invoice.id;
+            return this;
+        }
+
+        public Invoice build()
+        {
+            return new Invoice(this);
+        }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public List<OrderLine> getInvoiceItems() {
+        return invoiceItems;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Invoice invoice = (Invoice) o;
+
+        return id.equals(invoice.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", date=" + date +
+                ", invoiceItems=" + invoiceItems +
+                '}';
+    }
 }

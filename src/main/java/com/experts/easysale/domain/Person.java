@@ -6,6 +6,8 @@
 package com.experts.easysale.domain;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
@@ -27,10 +29,10 @@ public class Person implements Serializable{
     private Contact contact;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id")
-    private List<Item> items;
+    private List<Invoice> invoices;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id")
-    private List<Invoice> invoices;
+    private List<Sale> sales;
 
 
     public Person() {
@@ -43,11 +45,11 @@ public class Person implements Serializable{
         this.firstName=builder.firstName;
         this.lastName=builder.lastName;
         this.password=builder.password;
-        this.items=builder.items;
+        this.sales=builder.sales;
         this.invoices=builder.invoices;
     }
     
-    static class Builder{
+    public static class Builder{
         private String firstName;
         private String lastName;
         private String password;
@@ -55,7 +57,7 @@ public class Person implements Serializable{
         private Contact contact; 
         private Long id;
         private List<Invoice> invoices;
-        private List<Item> items;
+        private List<Sale> sales;
         
         public Builder(String value)
         {
@@ -74,15 +76,15 @@ public class Person implements Serializable{
             return this;
         }
 
-        public Builder password(String value)
+        public Builder password(String value) throws Exception
         {
-            this.password=value;
+            this.password=convertPasswordToMD5(value);
             return this;
         }
 
-        public Builder items(List<Item> value)
+        public Builder sale(List<Sale> value)
         {
-            this.items=value;
+            this.sales=value;
             return this;
         }
 
@@ -112,7 +114,7 @@ public class Person implements Serializable{
             this.contact=value.contact;
             this.id=value.id;
             this.password=value.password;
-            this.items=value.items;
+            this.sales=value.sales;
             this.invoices=value.invoices;
             return this;
         }
@@ -147,8 +149,22 @@ public class Person implements Serializable{
         return password;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    private static String convertPasswordToMD5(String pass) throws NoSuchAlgorithmException {
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        md.update(pass.getBytes());
+
+        byte byteData[]=md.digest();
+
+        StringBuffer sb=new StringBuffer();
+        for(int x=0;x<byteData.length;x++)
+        {
+            sb.append(Integer.toString((byteData[x]&0xff)+0x100,16).substring(1));
+        }
+        return sb.toString();
     }
 
     public List<Invoice> getInvoices() {
@@ -179,7 +195,15 @@ public class Person implements Serializable{
 
     @Override
     public String toString() {
-        return "Person{" + "firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", contact=" + contact + ", id=" + id + '}';
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                ", contact=" + contact +
+                ", invoices=" + invoices +
+                ", sales=" + sales +
+                '}';
     }
-    
 }

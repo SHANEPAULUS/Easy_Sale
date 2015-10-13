@@ -9,6 +9,8 @@ package com.experts.easysale.domain;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.security.MessageDigest;
+
 /**
  *
  * @author shane
@@ -44,10 +46,12 @@ public class TestDomain {
         Person buyer=new Buyer
                 .Builder("Goliath")
                 .firstName("Wessel")
+                .password("Shane")
                 .age(60)
                 .build();
         Assert.assertNotNull(buyer);
-        Assert.assertEquals("Wessel Goliath",buyer.getFirstName()+" "+buyer.getLastName());
+        Assert.assertEquals("Wessel Goliath", buyer.getFirstName() + " " + buyer.getLastName());
+        System.out.println("Password: "+buyer.getPassword());
     }
 
     @Test
@@ -60,5 +64,24 @@ public class TestDomain {
 
         Assert.assertNotNull(baseball);
         Assert.assertEquals(300.00,baseball.getPrice());
+    }
+
+    @Test
+    public void testPass() throws Exception {
+        String pass="Shane";
+        MessageDigest md=MessageDigest.getInstance("MD5");
+        md.update(pass.getBytes());
+
+        byte byteData[]=md.digest();
+
+        StringBuffer sb=new StringBuffer();
+        for(int x=0;x<byteData.length;x++)
+        {
+            sb.append(Integer.toString((byteData[x]&0xff)+0x100,16).substring(1));
+        }
+
+        System.out.println("Getting the password..");
+        System.out.println(sb.toString());
+
     }
 }

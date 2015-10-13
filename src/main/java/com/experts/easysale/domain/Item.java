@@ -1,10 +1,8 @@
 package com.experts.easysale.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by SHANE on 2015/10/12.
@@ -17,6 +15,9 @@ public class Item implements Serializable{
     private String description;
     private Double price;
     private int quantity;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="Items_id")
+    private List<Sale> sale;
 
     public Item() {
     }
@@ -26,13 +27,15 @@ public class Item implements Serializable{
         this.id=builder.id;
         this.price=builder.price;
         this.quantity=builder.quantity;
+        this.sale=builder.sale;
     }
 
-    static class Builder{
+    public static class Builder{
         private Long id;
         private String description;
         private Double price;
         private int quantity;
+        private List<Sale> sale;
 
         public Builder(String value)
         {
@@ -42,6 +45,12 @@ public class Item implements Serializable{
         public Builder id(Long value)
         {
             this.id=value;
+            return this;
+        }
+
+        public Builder sale(List<Sale> list)
+        {
+            this.sale=list;
             return this;
         }
 
@@ -63,6 +72,7 @@ public class Item implements Serializable{
             this.quantity=value.quantity;
             this.description=value.description;
             this.id=value.id;
+            this.sale=value.sale;
             return this;
         }
 
@@ -88,6 +98,10 @@ public class Item implements Serializable{
         return quantity;
     }
 
+    public List<Sale> getSale() {
+        return sale;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -111,6 +125,7 @@ public class Item implements Serializable{
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
+                ", sale=" + sale +
                 '}';
     }
 }
