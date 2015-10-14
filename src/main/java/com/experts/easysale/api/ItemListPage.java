@@ -3,6 +3,7 @@ import com.experts.easysale.domain.ItemList;
 import com.experts.easysale.services.ItemListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class ItemListPage {
     @Autowired
     ItemListService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/itemlists",method= RequestMethod.GET)
     ResponseEntity<List<ItemList>> getAllItemLists()
     {
         List<ItemList> itemLists=service.getAllItemLists();
@@ -29,7 +30,7 @@ public class ItemListPage {
         return new ResponseEntity<List<ItemList>>(itemLists,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/create",method= RequestMethod.POST)
+    @RequestMapping(value="/create",method= RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ItemList> addItemList(@RequestBody ItemList itemList)
     {
         service.addItemList(itemList);
@@ -37,7 +38,7 @@ public class ItemListPage {
         return new ResponseEntity<ItemList>(itemList,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/{id}",method= RequestMethod.GET)
+    @RequestMapping(value="/{id}",method= RequestMethod.GET,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ItemList> getItemList(@PathVariable("id")long id)
     {
         ItemList itemList=service.getItemList(id);
@@ -49,7 +50,7 @@ public class ItemListPage {
         return new ResponseEntity<ItemList>(itemList,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT)
+    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ItemList> updateItemList(@PathVariable("id")long id,@RequestBody ItemList itemList)
     {
         ItemList oldItemList=service.getItemList(id);

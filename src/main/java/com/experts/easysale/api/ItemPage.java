@@ -5,6 +5,7 @@ import com.experts.easysale.domain.OrderLine;
 import com.experts.easysale.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class ItemPage {
     @Autowired
     ItemService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/items",method= RequestMethod.GET)
     ResponseEntity<List<Item>> getAllItems()
     {
         List<Item> allItems=service.getAllItems();
@@ -55,7 +56,7 @@ public class ItemPage {
         return new ResponseEntity<List<OrderLine>>(orderLines,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}",method= RequestMethod.GET)
+    @RequestMapping(value="/{id}",method= RequestMethod.GET,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Item> getItem(@PathVariable("id") long id)
     {
         Item item=service.getItem(id);
@@ -65,17 +66,17 @@ public class ItemPage {
             return new ResponseEntity<Item>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Item>(item,HttpStatus.OK);
+        return new ResponseEntity<Item>(item,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/create",method= RequestMethod.POST)
+    @RequestMapping(value="/create",method= RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Item> addItem(@RequestBody Item item)
     {
         service.addItem(item);
         return new ResponseEntity<Item>(item,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT)
+    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Item> updateItem(@PathVariable("id") long id,@RequestBody Item item)
     {
         Item oldItem=service.getItem(id);

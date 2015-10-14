@@ -6,6 +6,7 @@ import com.experts.easysale.domain.Sale;
 import com.experts.easysale.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class PersonPage {
     @Autowired
     PersonService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/persons",method= RequestMethod.GET)
     ResponseEntity<List<Person>> getAllPersons()
     {
         List<Person> allPersons=service.getAllPersons();
@@ -69,7 +70,7 @@ public class PersonPage {
         return new ResponseEntity<List<Bid>>(bids,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}",method= RequestMethod.GET)
+    @RequestMapping(value="/{id}",method= RequestMethod.GET,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Person> getPerson(@PathVariable("id")long id)
     {
         Person person=service.getPerson(id);
@@ -81,14 +82,14 @@ public class PersonPage {
         return new ResponseEntity<Person>(person,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/create",method= RequestMethod.POST)
+    @RequestMapping(value="/create",method= RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Person> addPerson(@RequestBody Person person)
     {
         service.addPerson(person);
-        return new ResponseEntity<Person>(person,HttpStatus.OK);
+        return new ResponseEntity<Person>(person,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT)
+    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Person> updatePerson(@PathVariable("id")long id,@RequestBody Person person)
     {
         Person oldPerson=service.getPerson(id);

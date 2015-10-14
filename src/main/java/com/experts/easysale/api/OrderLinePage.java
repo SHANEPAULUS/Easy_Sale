@@ -3,6 +3,7 @@ import com.experts.easysale.domain.OrderLine;
 import com.experts.easysale.services.OrderLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class OrderLinePage {
     @Autowired
     OrderLineService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/orderlines",method= RequestMethod.GET)
     ResponseEntity<List<OrderLine>> getAllOrderLines()
     {
         List<OrderLine> allOrderLines=service.getAllOrderLines();
@@ -41,14 +42,14 @@ public class OrderLinePage {
         return new ResponseEntity<OrderLine>(orderLine,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/create",method= RequestMethod.POST)
+    @RequestMapping(value="/create",method= RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<OrderLine> addOrderLine(@RequestBody OrderLine orderLine)
     {
         service.addOrderLine(orderLine);
-        return new ResponseEntity<OrderLine>(orderLine,HttpStatus.OK);
+        return new ResponseEntity<OrderLine>(orderLine,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT)
+    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<OrderLine> updateOrderLine(@PathVariable("id")long id,@RequestBody OrderLine orderLine)
     {
         OrderLine oldOrderLine=service.getOrderLine(id);

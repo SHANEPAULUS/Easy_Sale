@@ -19,7 +19,7 @@ public class InvoicePage {
     @Autowired
     InvoiceService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/invoices",method= RequestMethod.GET)
     ResponseEntity<List<Invoice>> getAllInvoices()
     {
         List<Invoice> invoiceList=service.getAllInvoice();
@@ -40,7 +40,7 @@ public class InvoicePage {
             return new ResponseEntity<Invoice>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<Invoice>(invoice,HttpStatus.OK);
+        return new ResponseEntity<Invoice>(invoice,HttpStatus.CREATED);
     }
 
     @RequestMapping(value="/{id}/orderline",method= RequestMethod.GET)
@@ -56,7 +56,7 @@ public class InvoicePage {
         return new ResponseEntity<List<OrderLine>>(orderlines,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT)
+    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Invoice> updateInvoice(@PathVariable("id") long id,@RequestBody Invoice invoice)
     {
         Invoice oldInvoice=service.getInvoice(id);

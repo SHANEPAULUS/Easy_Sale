@@ -5,6 +5,7 @@ import com.experts.easysale.domain.Sale;
 import com.experts.easysale.services.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class SalePage {
     @Autowired
     SaleService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/sales",method= RequestMethod.GET)
     ResponseEntity<List<Sale>> getAllSales()
     {
         List<Sale> sales=service.getAllSales();
@@ -44,7 +45,7 @@ public class SalePage {
         return  new ResponseEntity<List<Bid>>(bids,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}",method= RequestMethod.GET)
+    @RequestMapping(value="/{id}",method= RequestMethod.GET,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Sale> getSale(@PathVariable("id")long id)
     {
         Sale sale=service.getSale(id);
@@ -56,14 +57,14 @@ public class SalePage {
         return new ResponseEntity<Sale>(sale,HttpStatus.OK);
     }
 
-    @RequestMapping(value="/create",method= RequestMethod.POST)
+    @RequestMapping(value="/create",method= RequestMethod.POST,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Sale> addSale(@RequestBody Sale sale)
     {
         service.addSale(sale);
         return new ResponseEntity<Sale>(sale,HttpStatus.CREATED);
     }
 
-    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT)
+    @RequestMapping(value="/{id}/update",method= RequestMethod.PUT,produces= MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Sale> updateSale(@PathVariable("id")long id,@RequestBody Sale sale)
     {
         Sale oldSale=service.getSale(id);

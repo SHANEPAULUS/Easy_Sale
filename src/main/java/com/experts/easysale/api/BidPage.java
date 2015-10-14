@@ -19,7 +19,7 @@ public class BidPage {
     @Autowired
     BidService service;
 
-    @RequestMapping(value="/",method= RequestMethod.GET)
+    @RequestMapping(value="/bids",method= RequestMethod.GET)
     ResponseEntity<List<Bid>> getAllBids()
     {
         List<Bid> bids=service.getAllBids();
