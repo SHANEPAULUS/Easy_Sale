@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface BidService {
     List<Bid> getAllBids();
+    Bid addBid(Bid bid);
     Bid getBid(Long id);
     Bid updateBid(Bid bid);
     void deleteBid(Bid bid);

@@ -5,6 +5,7 @@ import com.experts.easysale.domain.OrderLine;
 import com.experts.easysale.repository.InvoiceRepository;
 import com.experts.easysale.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 /**
  * Created by SHANE on 2015/10/13.
  */
+@Service
 public class InvoiceServiceImpl implements InvoiceService {
     @Autowired
     InvoiceRepository repository;

@@ -4,6 +4,7 @@ import com.experts.easysale.domain.Bid;
 import com.experts.easysale.repository.BidReposity;
 import com.experts.easysale.services.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by SHANE on 2015/10/13.
  */
+@Service
 public class BidServiceImpl implements BidService {
     @Autowired
     BidReposity reposity;
@@ -26,6 +28,11 @@ public class BidServiceImpl implements BidService {
         }
 
         return allBids;
+    }
+
+    @Override
+    public Bid addBid(Bid bid) {
+        return reposity.save(bid);
     }
 
     @Override

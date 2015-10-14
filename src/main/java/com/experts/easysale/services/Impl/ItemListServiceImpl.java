@@ -7,6 +7,7 @@ import com.experts.easysale.repository.ItemListRepository;
 import com.experts.easysale.services.ItemListService;
 import com.experts.easysale.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by SHANE on 2015/10/13.
  */
+@Service
 public class ItemListServiceImpl implements ItemListService {
     @Autowired
     ItemListRepository repository;

@@ -31,7 +31,7 @@ public class OrderLine {
         this.quantity=builder.quantity;
     }
 
-    static class Builder{
+    public static class Builder{
         private Long id;
         private int quantity;
 
