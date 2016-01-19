@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: com.experts.easysale
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: shane
+Implementation-Vendor-Id: com.experts.easysale
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_45
+Main-Class: ${start-class}
+
